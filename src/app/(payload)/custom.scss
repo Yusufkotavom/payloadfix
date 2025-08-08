@@ -1,0 +1,143 @@
+/* Agency Custom Branding */
+
+:root {
+  /* Primary Brand Colors */
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #fafafa;
+  --theme-elevation-100: #f5f5f5;
+  --theme-elevation-150: #eeeeee;
+  --theme-elevation-200: #e0e0e0;
+  --theme-elevation-300: #d0d0d0;
+  --theme-elevation-400: #bdbdbd;
+  --theme-elevation-500: #9e9e9e;
+  --theme-elevation-600: #757575;
+  --theme-elevation-700: #616161;
+  --theme-elevation-800: #424242;
+  --theme-elevation-900: #212121;
+  --theme-elevation-1000: #000000;
+
+  /* Agency Brand Colors */
+  --theme-primary-50: #eff6ff;
+  --theme-primary-100: #dbeafe;
+  --theme-primary-200: #bfdbfe;
+  --theme-primary-300: #93c5fd;
+  --theme-primary-400: #60a5fa;
+  --theme-primary-500: #3b82f6;
+  --theme-primary-600: #2563eb;
+  --theme-primary-700: #1d4ed8;
+  --theme-primary-800: #1e40af;
+  --theme-primary-900: #1e3a8a;
+
+  /* Custom Success/Error Colors */
+  --theme-success-50: #f0fdf4;
+  --theme-success-500: #22c55e;
+  --theme-success-750: #15803d;
+  
+  --theme-error-50: #fef2f2;
+  --theme-error-500: #ef4444;
+  --theme-error-750: #dc2626;
+
+  --theme-warning-50: #fffbeb;
+  --theme-warning-500: #f59e0b;
+  --theme-warning-750: #d97706;
+}
+
+/* Header Customization */
+.template-minimal .app-header {
+  background: linear-gradient(135deg, var(--theme-primary-600), var(--theme-primary-700));
+  border-bottom: 1px solid var(--theme-primary-500);
+}
+
+.template-minimal .app-header .logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Sidebar Customization */
+.template-minimal .nav {
+  background: var(--theme-elevation-50);
+  border-right: 1px solid var(--theme-elevation-200);
+}
+
+.template-minimal .nav__link {
+  color: var(--theme-elevation-700);
+  transition: all 0.2s ease;
+}
+
+.template-minimal .nav__link:hover,
+.template-minimal .nav__link.active {
+  background: var(--theme-primary-50);
+  color: var(--theme-primary-700);
+  border-left: 3px solid var(--theme-primary-500);
+}
+
+/* Button Customization */
+.btn--style-primary {
+  background: var(--theme-primary-500);
+  border-color: var(--theme-primary-500);
+}
+
+.btn--style-primary:hover {
+  background: var(--theme-primary-600);
+  border-color: var(--theme-primary-600);
+}
+
+/* Login Page Customization */
+.template-minimal .account {
+  background: linear-gradient(135deg, var(--theme-primary-50), var(--theme-primary-100));
+}
+
+.template-minimal .account .login__form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Remove Payload Branding */
+.payload-logo,
+.powered-by-payload {
+  display: none !important;
+}
+
+/* Custom Footer */
+.template-minimal .app-footer::after {
+  content: "Powered by KOTACOM AGENCY";
+  color: var(--theme-elevation-500);
+  font-size: 0.875rem;
+}
+
+/* Hide original footer text */
+.template-minimal .app-footer {
+  color: transparent;
+}
+
+/* Dashboard Customization */
+.dashboard .dashboard__label {
+  color: var(--theme-primary-700);
+  font-weight: 600;
+}
+
+/* Collection List Styling */
+.collection-list .table-header {
+  background: var(--theme-primary-50);
+  border-bottom: 2px solid var(--theme-primary-200);
+}
+
+/* Form Field Styling */
+.field-type .field__label {
+  color: var(--theme-elevation-800);
+  font-weight: 500;
+}
+
+.field-type .text-input,
+.field-type .textarea {
+  border: 1px solid var(--theme-elevation-300);
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.field-type .text-input:focus,
+.field-type .textarea:focus {
+  border-color: var(--theme-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
