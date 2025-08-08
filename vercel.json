@@ -9,13 +9,5 @@
     "src/app/(frontend)/(sitemaps)/posts-sitemap.xml/route.ts": {
       "maxDuration": 30
     }
-  },
-  "env": {
-    "NODE_OPTIONS": "--no-deprecation --no-experimental-strip-types"
-  },
-  "build": {
-    "env": {
-      "NODE_OPTIONS": "--no-deprecation --no-experimental-strip-types"
-    }
   }
 }
