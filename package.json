@@ -19,7 +19,22 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "setup": "node scripts/setup-cms.js",
+    "cms:dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "cms:build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "cms:start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up",
+    "docker:dev:build": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:dev:logs": "docker-compose -f docker-compose.dev.yml logs -f",
+    "git:helper": "chmod +x scripts/git-helper.sh && ./scripts/git-helper.sh",
+    "git:status": "git status",
+    "git:add": "git add .",
+    "git:commit": "git commit -m",
+    "git:push": "git push origin main",
+    "git:pull": "git pull origin main",
+    "git:workflow": "git add . && git commit -m \"feat: update CMS files\" && git push origin main"
   },
   "dependencies": {
     "@payloadcms/admin-bar": "^3.50.0",

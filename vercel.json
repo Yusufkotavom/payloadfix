@@ -1,0 +1,13 @@
+{
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "functions": {
+    "src/app/(frontend)/(sitemaps)/pages-sitemap.xml/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/(frontend)/(sitemaps)/posts-sitemap.xml/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}
