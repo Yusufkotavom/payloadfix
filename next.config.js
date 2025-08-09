@@ -31,16 +31,6 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  // Performance optimizations
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
-  turbopack: {
-    resolveAlias: {
-      underscore: 'lodash',
-      mocha: { browser: 'mocha/browser-entry.js' },
-    },
-  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
