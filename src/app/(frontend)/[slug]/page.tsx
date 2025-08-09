@@ -12,7 +12,6 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { KotacomHomepage } from '../kotacom-homepage'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -65,18 +64,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const { hero, layout } = page
-
-  // Special handling for homepage
-  if (slug === 'home') {
-    return (
-      <div>
-        <PageClient />
-        <PayloadRedirects disableNotFound url={url} />
-        {draft && <LivePreviewListener />}
-        <KotacomHomepage layout={layout} />
-      </div>
-    )
-  }
 
   return (
     <article className="pt-16 pb-24">
