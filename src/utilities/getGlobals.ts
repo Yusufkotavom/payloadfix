@@ -24,16 +24,3 @@ export const getCachedGlobal = (slug: Global, depth = 0) =>
   unstable_cache(async () => getGlobal(slug, depth), [slug], {
     tags: [`global_${slug}`],
   })
-
-export const getGlobals = async () => {
-  const [header, footer, siteIdentity, businessInfo, navigation, websiteDesign, seoDefaults] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/header`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/footer`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/siteIdentity`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/businessInfo`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/navigation`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/websiteDesign`).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/globals/seoDefaults`).then((r) => r.json()),
-  ])
-  return { header, footer, siteIdentity, businessInfo, navigation, websiteDesign, seoDefaults }
-}

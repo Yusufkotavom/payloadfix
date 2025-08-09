@@ -1,5 +1,5 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 
 import sharp from 'sharp' // sharp-import
 import path from 'path'
@@ -11,38 +11,24 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Products } from './collections/Products'
-import { Tags } from './collections/Tags'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
-import { SiteIdentity } from './globals/siteIdentity'
-import { BusinessInfo } from './globals/businessInfo'
-import { Navigation } from './globals/navigation'
-import { WebsiteDesign } from './globals/websiteDesign'
-import { SeoDefaults } from './globals/seoDefaults'
-
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    meta: {
-      titleSuffix: ' - KOTACOM AGENCY',
-    },
     components: {
-      // Custom agency login screen
+      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
+      // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
-      // Custom agency dashboard
+      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
+      // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
-      // Custom logo component
-      graphics: {
-        Logo: '@/components/Logo/Logo',
-        Icon: '@/components/Logo/Logo',
-      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -73,14 +59,12 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  // database-adapter-config-start
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI,
+    url: process.env.DATABASE_URI || '',
   }),
-  // database-adapter-config-end
-  collections: [Pages, Posts, Media, Categories, Users, Products, Tags],
+  collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, SiteIdentity, BusinessInfo, Navigation, WebsiteDesign, SeoDefaults],
+  globals: [Header, Footer],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

@@ -10,59 +10,63 @@ const BeforeDashboard: React.FC = () => {
   return (
     <div className={baseClass}>
       <Banner className={`${baseClass}__banner`} type="success">
-        <h4>🎉 Welcome to KOTACOM AGENCY CMS!</h4>
+        <h4>Welcome to your dashboard!</h4>
       </Banner>
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
-          padding: '1.5rem',
-          borderRadius: '8px',
-          marginBottom: '1rem',
-        }}
-      >
-        <h3 style={{ color: '#1e40af', marginTop: '0' }}>Content Management Dashboard</h3>
-        <p style={{ color: '#475569', marginBottom: '0' }}>
-          Professional tools for managing your client&apos;s content and digital presence.
-        </p>
-      </div>
-
-      <h4>Quick Actions:</h4>
+      Here&apos;s what to do next:
       <ul className={`${baseClass}__instructions`}>
         <li>
           <SeedButton />
-          {' to populate with sample content, then '}
-          <a href="/" target="_blank" style={{ color: '#2563eb' }}>
-            preview your website
+          {' with a few pages, posts, and projects to jump-start your new site, then '}
+          <a href="/" target="_blank">
+            visit your website
           </a>
+          {' to see the results.'}
         </li>
         <li>
-          <strong>Manage Content:</strong> Navigate to Pages, Posts, or Media to start creating
-          content
+          If you created this repo using Payload Cloud, head over to GitHub and clone it to your
+          local machine. It will be under the <i>GitHub Scope</i> that you selected when creating
+          this project.
         </li>
         <li>
-          <strong>Configure Settings:</strong> Update site identity, navigation, and SEO settings
+          {'Modify your '}
+          <a
+            href="https://payloadcms.com/docs/configuration/collections"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            collections
+          </a>
+          {' and add more '}
+          <a
+            href="https://payloadcms.com/docs/fields/overview"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            fields
+          </a>
+          {' as needed. If you are new to Payload, we also recommend you check out the '}
+          <a
+            href="https://payloadcms.com/docs/getting-started/what-is-payload"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Getting Started
+          </a>
+          {' docs.'}
         </li>
         <li>
-          <strong>User Management:</strong> Add team members and manage access permissions
+          Commit and push your changes to the repository to trigger a redeployment of your project.
         </li>
       </ul>
-
-      <div
-        style={{
-          marginTop: '2rem',
-          padding: '1rem',
-          background: '#f1f5f9',
-          borderRadius: '6px',
-          borderLeft: '4px solid #3b82f6',
-        }}
+      {'Pro Tip: This block is a '}
+      <a
+        href="https://payloadcms.com/docs/custom-components/overview"
+        rel="noopener noreferrer"
+        target="_blank"
       >
-        <strong style={{ color: '#1e40af' }}>KOTACOM AGENCY</strong> - Professional Digital
-        Solutions
-        <br />
-        <small style={{ color: '#64748b' }}>
-          Need help? Contact your development team for technical support.
-        </small>
-      </div>
+        custom component
+      </a>
+      , you can remove it at any time by updating your <strong>payload.config</strong>.
     </div>
   )
 }

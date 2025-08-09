@@ -72,8 +72,6 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
-    products: Product;
-    tags: Tag;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -90,8 +88,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
-    tags: TagsSelect<false> | TagsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -107,20 +103,10 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    siteIdentity: SiteIdentity;
-    businessInfo: BusinessInfo;
-    navigation: Navigation;
-    websiteDesign: WebsiteDesign;
-    seoDefaults: SeoDefault;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    siteIdentity: SiteIdentitySelect<false> | SiteIdentitySelect<true>;
-    businessInfo: BusinessInfoSelect<false> | BusinessInfoSelect<true>;
-    navigation: NavigationSelect<false> | NavigationSelect<true>;
-    websiteDesign: WebsiteDesignSelect<false> | WebsiteDesignSelect<true>;
-    seoDefaults: SeoDefaultsSelect<false> | SeoDefaultsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -205,19 +191,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (
-    | HeroBlock
-    | RichTextBlock
-    | ContentBlock
-    | CallToActionBlock
-    | HtmlBlock
-    | MdxBlock
-    | ImageBlock
-    | ProductBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-  )[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -258,7 +232,6 @@ export interface Post {
   };
   relatedPosts?: (string | Post)[] | null;
   categories?: (string | Category)[] | null;
-  tags?: (string | Tag)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -396,18 +369,6 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: string;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -430,111 +391,6 @@ export interface User {
       }[]
     | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  title: string;
-  description?: string | null;
-  image?: (string | null) | Media;
-  button: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'heroBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichTextBlock".
- */
-export interface RichTextBlock {
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'richTextBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock".
- */
-export interface ContentBlock {
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'content';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -586,71 +442,53 @@ export interface CallToActionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HtmlBlock".
+ * via the `definition` "ContentBlock".
  */
-export interface HtmlBlock {
-  html: string;
+export interface ContentBlock {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'htmlBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MdxBlock".
- */
-export interface MdxBlock {
-  mdx: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mdxBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ImageBlock".
- */
-export interface ImageBlock {
-  image: string | Media;
-  caption?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'imageBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductBlock".
- */
-export interface ProductBlock {
-  products: (string | Product)[];
-  layout?: ('grid' | 'list') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'productBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  title: string;
-  description?: string | null;
-  price?: number | null;
-  affiliateUrl?: string | null;
-  image?: (string | null) | Media;
-  categories?: (string | Category)[] | null;
-  tags?: (string | Tag)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
+  blockType: 'content';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1090,14 +928,6 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'products';
-        value: string | Product;
-      } | null)
-    | ({
-        relationTo: 'tags';
-        value: string | Tag;
-      } | null)
-    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -1190,14 +1020,8 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        heroBlock?: T | HeroBlockSelect<T>;
-        richTextBlock?: T | RichTextBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
-        htmlBlock?: T | HtmlBlockSelect<T>;
-        mdxBlock?: T | MdxBlockSelect<T>;
-        imageBlock?: T | ImageBlockSelect<T>;
-        productBlock?: T | ProductBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
@@ -1215,62 +1039,6 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock_select".
- */
-export interface HeroBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  image?: T;
-  button?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichTextBlock_select".
- */
-export interface RichTextBlockSelect<T extends boolean = true> {
-  content?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock_select".
- */
-export interface ContentBlockSelect<T extends boolean = true> {
-  columns?:
-    | T
-    | {
-        size?: T;
-        richText?: T;
-        enableLink?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1298,39 +1066,27 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HtmlBlock_select".
+ * via the `definition` "ContentBlock_select".
  */
-export interface HtmlBlockSelect<T extends boolean = true> {
-  html?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MdxBlock_select".
- */
-export interface MdxBlockSelect<T extends boolean = true> {
-  mdx?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ImageBlock_select".
- */
-export interface ImageBlockSelect<T extends boolean = true> {
-  image?: T;
-  caption?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductBlock_select".
- */
-export interface ProductBlockSelect<T extends boolean = true> {
-  products?: T;
-  layout?: T;
+export interface ContentBlockSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        size?: T;
+        richText?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1378,7 +1134,6 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   relatedPosts?: T;
   categories?: T;
-  tags?: T;
   meta?:
     | T
     | {
@@ -1535,41 +1290,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  price?: T;
-  affiliateUrl?: T;
-  image?: T;
-  categories?: T;
-  tags?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags_select".
- */
-export interface TagsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1886,197 +1606,6 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "siteIdentity".
- */
-export interface SiteIdentity {
-  id: string;
-  siteName: string;
-  tagline?: string | null;
-  logo?: (string | null) | Media;
-  logoDark?: (string | null) | Media;
-  favicon?: (string | null) | Media;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "businessInfo".
- */
-export interface BusinessInfo {
-  id: string;
-  address?: string | null;
-  email?: string | null;
-  phoneNumber?: string | null;
-  socialMediaLinks?:
-    | {
-        platform: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation".
- */
-export interface Navigation {
-  id: string;
-  headerMenuLinks?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  footerPrimaryLinks?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  footerSecondaryLinks?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "websiteDesign".
- */
-export interface WebsiteDesign {
-  id: string;
-  primaryColor?: string | null;
-  secondaryColor?: string | null;
-  textColor?: string | null;
-  backgroundColor?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "seoDefaults".
- */
-export interface SeoDefault {
-  id: string;
-  fallbackMeta?: {
-    defaultMetaTitle?: string | null;
-    defaultMetaDescription?: string | null;
-    defaultOgImage?: (string | null) | Media;
-  };
-  globalSchema?: (LocalBusinessSchema | ServiceSchema | ReviewSchema | OrganizationSchema)[] | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LocalBusinessSchema".
- */
-export interface LocalBusinessSchema {
-  businessName: string;
-  address?: string | null;
-  telephone?: string | null;
-  email?: string | null;
-  priceRange?: string | null;
-  openingHours?:
-    | {
-        dayOfWeek?: string | null;
-        opens?: string | null;
-        closes?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'localBusiness';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ServiceSchema".
- */
-export interface ServiceSchema {
-  serviceType: string;
-  providerName?: string | null;
-  areaServed?: string | null;
-  description?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'service';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ReviewSchema".
- */
-export interface ReviewSchema {
-  itemName: string;
-  author?: string | null;
-  reviewRating?: number | null;
-  reviewBody?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'review';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OrganizationSchema".
- */
-export interface OrganizationSchema {
-  organizationName: string;
-  legalName?: string | null;
-  logo?: (string | null) | Media;
-  url?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'organization';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2120,184 +1649,6 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "siteIdentity_select".
- */
-export interface SiteIdentitySelect<T extends boolean = true> {
-  siteName?: T;
-  tagline?: T;
-  logo?: T;
-  logoDark?: T;
-  favicon?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "businessInfo_select".
- */
-export interface BusinessInfoSelect<T extends boolean = true> {
-  address?: T;
-  email?: T;
-  phoneNumber?: T;
-  socialMediaLinks?:
-    | T
-    | {
-        platform?: T;
-        url?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation_select".
- */
-export interface NavigationSelect<T extends boolean = true> {
-  headerMenuLinks?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
-  footerPrimaryLinks?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
-  footerSecondaryLinks?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "websiteDesign_select".
- */
-export interface WebsiteDesignSelect<T extends boolean = true> {
-  primaryColor?: T;
-  secondaryColor?: T;
-  textColor?: T;
-  backgroundColor?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "seoDefaults_select".
- */
-export interface SeoDefaultsSelect<T extends boolean = true> {
-  fallbackMeta?:
-    | T
-    | {
-        defaultMetaTitle?: T;
-        defaultMetaDescription?: T;
-        defaultOgImage?: T;
-      };
-  globalSchema?:
-    | T
-    | {
-        localBusiness?: T | LocalBusinessSchemaSelect<T>;
-        service?: T | ServiceSchemaSelect<T>;
-        review?: T | ReviewSchemaSelect<T>;
-        organization?: T | OrganizationSchemaSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LocalBusinessSchema_select".
- */
-export interface LocalBusinessSchemaSelect<T extends boolean = true> {
-  businessName?: T;
-  address?: T;
-  telephone?: T;
-  email?: T;
-  priceRange?: T;
-  openingHours?:
-    | T
-    | {
-        dayOfWeek?: T;
-        opens?: T;
-        closes?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ServiceSchema_select".
- */
-export interface ServiceSchemaSelect<T extends boolean = true> {
-  serviceType?: T;
-  providerName?: T;
-  areaServed?: T;
-  description?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ReviewSchema_select".
- */
-export interface ReviewSchemaSelect<T extends boolean = true> {
-  itemName?: T;
-  author?: T;
-  reviewRating?: T;
-  reviewBody?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OrganizationSchema_select".
- */
-export interface OrganizationSchemaSelect<T extends boolean = true> {
-  organizationName?: T;
-  legalName?: T;
-  logo?: T;
-  url?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
